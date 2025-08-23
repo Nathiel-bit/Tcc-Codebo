@@ -112,10 +112,16 @@ canvas{
   height: 100%;
 }
 
-/*Colocar aqui uma borda para quando passar o mouse
-Colocar aqui o ponteiro do mouse tipo de botão (cursor: pointer)*/
+/*Borda adicionada
+Cursor:Pointer add*/
 .btnn:hover {
+  border: rgba(0,0,255) 5px solid;
+  cursor: pointer;
+  filter: grayscale(0);
+  -webkit-filter: grayscale(0);
+}
 
-   filter: grayscale(0);
-   -webkit-filter: grayscale(0);
+.btnn.selecionado {
+  border: 5px solid red;
+  filter: grayscale(0);
 }

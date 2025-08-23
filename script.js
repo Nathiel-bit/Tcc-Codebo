@@ -1,6 +1,25 @@
+mapa = [];
+tamanhoQuadrado = 100;
+//colocar id em todas imgs, salvar aqui em variaveis
+imagemInicio =  document.getElementById('img-inicio');
+
+
+
+canvas = document.getElementById('canvas');
+ctx = canvas.getContext('2d');
+largura =0;
+altura = 0;
+
+//Função para adicionar botões ao mapa
+let imagemSelecionada = null;
+
+const containerBtnn = document.getElementById('container-btnn');
+
+
+
 function gerarMapa(){
-    var largura = document.getElementById('width').value;
-    var altura = document.getElementById('height').value;
+    largura = document.getElementById('width').value;
+    altura = document.getElementById('height').value;
 
     inicializadorArray(largura, altura);
 
@@ -16,54 +35,37 @@ function gerarMapa(){
         }
     }
 
-    var canvas = document.getElementById('canvas');
     canvas.width = largura * 100;
     canvas.height = altura * 100;
-
-    var ctx = canvas.getContext('2d');
     ctx.strokeStyle = '#a2d5a2'; // Cor do contorno dos quadrados
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    for (var x = 0; x < largura; x++) {
-        for (var y = 0; y < altura; y++) {
-            ctx.strokeRect(x * 100, y * 100, 100, 100);
-        }
-    }
+    printMapa();
+   
 }
-
-mapa = [];
 
 function inicializadorArray(largura, altura){
 for ( var x = 0; x < largura; x++){
     mapa [x] = [];
     for(var y = 0; y < altura; y++)
-        mapa[x].push = ( "vazio");
+        mapa[x].push("vazio");
     }
 }
 
 function printMapa(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 for(var x = 0; x < largura; x++){
     for(var y = 0; y < altura; y++){
+        posX = x * tamanhoQuadrado;
+        posY = y * tamanhoQuadrado;
+
         if(mapa [x][y] == "vazio"){
-            ctx.strokeRect(x * 100, y * 100, 100, 100);
-        }
+            ctx.strokeRect(posX, posY,tamanhoQuadrado, tamanhoQuadrado);
+        }else if(mapa[x][y] == "inicio"){
+             ctx.drawImage(imagemInicio, posX, posY, tamanhoQuadrado, tamanhoQuadrado);
+        }//colocar todos os else if para todas imagens
     }
  }
 }
-
-// Função para desenhar o cubo no canvas
-window.addEventListener('mousedown', function(event) {
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    var rect = canvas.getBoundingClientRect();
-    var x = event.clientX - rect.left;
-    var y = event.clientY - rect.to
-    var posX = Math.floor(x / 100) * 100;
-    var posY = Math.floor(y / 100) * 100;
-
-    // Desenha o cubo na posição calculada
-    ctx.drawImage(cubos, 0, 0, 100, 100, posX, posY, 100, 100);
-});
 
 
 //Salvar em PDF
@@ -90,3 +92,49 @@ async function salvarMapa() {
     pdf.addImage(imgData, 'JPEG', 0, 0, canvasWidth, canvasHeight);
     pdf.save(`${titulo}.pdf`);
 }
+
+
+
+containerBtnn.addEventListener('click', (event) => {
+    const botaoClicado = event.target.closest('.btnn');
+    
+    if (botaoClicado) {
+        const imagemDoBotao = botaoClicado.querySelector('img');
+       
+        imagemSelecionada = imagemDoBotao;
+
+        const botoes = document.querySelectorAll('.btnn');
+        botoes.forEach(btn => {
+            btn.classList.remove('selecionado');
+            const textoSelecionado = btn.querySelector('.texto-selecionado');
+            if (textoSelecionado) {
+                textoSelecionado.style.display = 'none';
+            }
+        });
+        
+        botaoClicado.classList.add('selecionado');
+        const textoSelecionado = botaoClicado.querySelector('.texto-selecionado');
+        if (textoSelecionado) {
+            textoSelecionado.style.display = 'block';
+        }
+    }
+});
+
+canvas.addEventListener('click', (event) => {
+    if (imagemSelecionada) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        
+        const posX = Math.floor(x / tamanhoQuadrado) * tamanhoQuadrado;
+        const posY = Math.floor(y / tamanhoQuadrado) * tamanhoQuadrado;
+
+        const value = imagemSelecionada.getAttribute('value');
+        console.log(x, y);
+        mapa[posX/100][posY/100] = value;
+
+        //ctx.drawImage(imagemSelecionada, posX, posY, tamanhoQuadrado, tamanhoQuadrado);
+        printMapa();
+    }
+});
