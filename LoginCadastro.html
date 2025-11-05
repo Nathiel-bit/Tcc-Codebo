@@ -20,20 +20,20 @@
             </div>    
             <div class="segunda-coluna">
                 <h2 class="titulo titulo-secundario">Criar conta</h2>
-                <form class="formulario">
+                <form class="formulario" action="cadastro.php" method="post">
                     <label class="rotulo-input" for="">
                         <i class="far fa-user icone-modificado"></i>
-                        <input type="text" placeholder="Nome completo" required>
+                        <input type="text" placeholder="Nome completo" name="nome" required>
                     </label>
                     
                     <label class="rotulo-input" for="">
                         <i class="far fa-envelope icone-modificado"></i>
-                        <input type="email" placeholder="E-mail" required>
+                        <input type="email" placeholder="E-mail" name="email" required>
                     </label>
                     
                     <label class="rotulo-input" for="">
                         <i class="fas fa-lock icone-modificado"></i>
-                        <input type="password" placeholder="Senha" required>
+                        <input type="password" placeholder="Senha" name="senha" required>
                     </label>
                     
                     <button class="botao botao-secundario">Cadastrar</button>        
@@ -51,15 +51,15 @@
             <div class="segunda-coluna">
                 <h2 class="titulo titulo-secundario">Login</h2>
                 <div class="redes-sociais"></div>
-                <form class="formulario">
+                <form class="formulario" action="login.php" method="post">
                     <label class="rotulo-input" for="">
                         <i class="far fa-envelope icone-modificado"></i>
-                        <input type="email" placeholder="E-mail" required>
+                        <input type="email" placeholder="E-mail" name="email" required>
                     </label>
                 
                     <label class="rotulo-input" for="">
                         <i class="fas fa-lock icone-modificado"></i>
-                        <input type="password" placeholder="Senha" required>
+                        <input type="password" placeholder="Senha" name="senha" required>
                     </label>
                 
                     <button class="botao botao-secundario">Entrar</button>
