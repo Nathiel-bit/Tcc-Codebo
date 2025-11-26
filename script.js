@@ -78,7 +78,7 @@ function printMapa() {
 }
 
 // Salvar em PDF
-async function salvarMapa() {
+async function exportarMapa() {
     const canvas = document.getElementById('canvas');
     const titulo = document.getElementById('name').value.trim();
 
@@ -135,3 +135,20 @@ canvas.addEventListener('click', (event) => {
         printMapa();
     }
 });
+
+function salvarMapa(nome, map, id_usuario) {
+    $.POST('salvarMapa.php', {
+        nome: nome,
+        map: map,
+        idusuario: idusuario
+    }).done(function (data) {
+        console.log(data);
+    });
+}
+
+function listarMapas() {
+    $.GET('', function (data) {
+        const mapas = JSON.parse(data);
+        console.log(mapas);
+    });
+}
