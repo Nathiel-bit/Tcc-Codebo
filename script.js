@@ -8,6 +8,11 @@ let imagemMato = document.getElementById('img-mato');
 let imagemBandeira = document.getElementById('img-bandeira');
 let imagemMato2 = document.getElementById('img-mato2');
 let imagemPraia = document.getElementById('img-praia');
+let imagemPraia2 = document.getElementById('img-praia2');
+let imagemPraia3 = document.getElementById('img-praia3');
+let imagemPraia4 = document.getElementById('img-praia4');
+let imagemPraia5 = document.getElementById('img-praia5');
+let imagemPraia6 = document.getElementById('img-praia6');
 
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
@@ -21,7 +26,13 @@ const containerBtnn = document.getElementById('container-btnn');
 function gerarMapa() {
     largura = document.getElementById('width').value;
     altura = document.getElementById('height').value;
-
+    if(largura > 4){
+        alert("Largura acima do máximo (4)");
+        return;
+    }else if(largura > 6){
+        alert("Altura acima do máximo (6)");
+        return;
+    }
     inicializadorArray(largura, altura);
 
     if (largura <= 0 || altura <= 0) {
@@ -36,8 +47,8 @@ function gerarMapa() {
         }
     }
 
-    canvas.width = largura * 100;
-    canvas.height = altura * 100;
+    canvas.width = largura * tamanhoQuadrado;
+    canvas.height = altura * tamanhoQuadrado;
     ctx.strokeStyle = '#a2d5a2';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     printMapa();
@@ -72,6 +83,16 @@ function printMapa() {
                 ctx.drawImage(imagemMato2, posX, posY, tamanhoQuadrado, tamanhoQuadrado);
             } else if (mapa[x][y] == "praia") {
                 ctx.drawImage(imagemPraia, posX, posY, tamanhoQuadrado, tamanhoQuadrado);
+            }else if (mapa[x][y] == "praia2") {
+                ctx.drawImage(imagemPraia2, posX, posY, tamanhoQuadrado, tamanhoQuadrado);
+            }else if (mapa[x][y] == "praia3") {
+                ctx.drawImage(imagemPraia3, posX, posY, tamanhoQuadrado, tamanhoQuadrado);
+            }else if (mapa[x][y] == "praia4") {
+                ctx.drawImage(imagemPraia4, posX, posY, tamanhoQuadrado, tamanhoQuadrado);
+            }else if (mapa[x][y] == "praia5") {
+                ctx.drawImage(imagemPraia5, posX, posY, tamanhoQuadrado, tamanhoQuadrado);
+            }else if (mapa[x][y] == "praia6") {
+                ctx.drawImage(imagemPraia6, posX, posY, tamanhoQuadrado, tamanhoQuadrado);
             }
         }
     }
@@ -87,15 +108,16 @@ async function exportarMapa() {
         return;
     }
 
-    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    const imgData = canvas.toDataURL('image/png', 1.0);
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const orientation = canvasWidth > canvasHeight ? 'l' : 'p';
+    const orientation = 'l'; //canvasWidth > canvasHeight ? 'l' : 'p';
 
     const pdf = new jspdf.jsPDF({
         orientation: orientation,
         unit: 'px',
-        format: [canvasWidth, canvasHeight]
+        format: 'a4'
+        //format: [canvasWidth, canvasHeight]
     });
 
     pdf.addImage(imgData, 'JPEG', 0, 0, canvasWidth, canvasHeight);
