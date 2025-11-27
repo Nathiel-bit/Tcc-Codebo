@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $usuario = "root";      
-$senha = "";          
+$senha = "root";          
 $dbname = "tcc_codebo";
 
 $conn = new mysqli($host, $usuario, $senha, $dbname);

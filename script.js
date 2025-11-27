@@ -136,19 +136,54 @@ canvas.addEventListener('click', (event) => {
     }
 });
 
-function salvarMapa(nome, map, id_usuario) {
-    $.POST('salvarMapa.php', {
-        nome: nome,
-        map: map,
-        idusuario: idusuario
-    }).done(function (data) {
-        console.log(data);
-    });
+function salvarMapa() {
+    /*todo: depois mudar */
+    nome = document.getElementById("name").value;
+    
+    id_usuario = 1;
+    tipo = document.getElementById("tipo").value;
+
+    fetch("salvarMapa.php", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: 
+        "nome=" + encodeURIComponent(nome) +
+        "&mapa=" + encodeURIComponent(mapa.toString()) +
+        "&tipo=" + encodeURIComponent(tipo) +
+        "&idusuario=" + encodeURIComponent(id_usuario)
+    })
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Erro ao carregar o arquivo: ' + response.statusText);
+    }
+    return response.text(); 
+})
+.then(texto => {
+    console.log("Texto recebido:", texto);
+})
+.catch(error => {
+    console.error("Erro:", error);
+});
+
 }
 
 function listarMapas() {
-    $.GET('', function (data) {
-        const mapas = JSON.parse(data);
-        console.log(mapas);
+
+
+    fetch("")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao carregar o arquivo: ' 
+                + response.statusText);
+        }
+        return response.json(); //text, blob ou json...
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+         console.log(error);
     });
 }
