@@ -13,7 +13,7 @@ let imagemPraia3 = document.getElementById('img-praia3');
 let imagemPraia4 = document.getElementById('img-praia4');
 let imagemPraia5 = document.getElementById('img-praia5');
 let imagemPraia6 = document.getElementById('img-praia6');
-
+let img_logo = document.getElementById("logo");
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let largura = 0;
@@ -26,11 +26,11 @@ const containerBtnn = document.getElementById('container-btnn');
 function gerarMapa() {
     largura = document.getElementById('width').value;
     altura = document.getElementById('height').value;
-    if(largura > 4){
-        alert("Largura acima do máximo (4)");
+    if(altura > 4){
+        alert("Altura acima do máximo (4)");
         return;
     }else if(largura > 6){
-        alert("Altura acima do máximo (6)");
+        alert("Largura acima do máximo (6)");
         return;
     }
     inicializadorArray(largura, altura);
@@ -120,7 +120,11 @@ async function exportarMapa() {
         //format: [canvasWidth, canvasHeight]
     });
 
-    pdf.addImage(imgData, 'JPEG', 0, 0, canvasWidth, canvasHeight);
+    pdf.addImage(imgData, 'JPEG', 5, 5, canvasWidth, canvasHeight);
+    pdf.addImage(img_logo, 'JPEG', 5, canvasHeight + 5, 200, 50);
+    nome = document.getElementById("name").value;
+    pdf.text(nome, 200 , canvasHeight + 20);
+    
     pdf.save(`${titulo}.pdf`);
 }
 
